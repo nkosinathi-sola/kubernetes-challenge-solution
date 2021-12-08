@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: myapp-deployment
+  labels:
+      app: myapp
+      type: front-end
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+      - name: server-js
+        image: nkosidevops/server-js:latest
+        envFrom:
+          - configMapRef:
+              name: myapp-configmap  
+  selector:
+    matchLabels:
+      type: front-end
+
+# create deployment
+# kubectl create -f deployment.yml
